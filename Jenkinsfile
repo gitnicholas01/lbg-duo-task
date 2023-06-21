@@ -4,29 +4,6 @@ pipeline {
     stages {
         
        
-        stage('cleanup') {
-            steps {
-                sh '''
-                if docker logs nginx; then
-                    if docker exec nginx ls; then
-                        docker stop nginx
-		            else
-			            sleep 1
-                    fi
-                    docker rm nginx
-		        else
-		            sleep 1
-                fi
-                if docker logs flask-app; then
-                    if docker exec flask-app ls; then
-                        docker stop flask-app
-		            else
-			            sleep 1
-                    fi
-                    docker rm flask-app
-		              '''
-            }
-        }
         stage('Build') {
             steps {
                 sh 'docker build -t duo-task:v1 .'
